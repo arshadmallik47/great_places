@@ -29,37 +29,39 @@ class PlacesListScreen extends StatelessWidget {
       body: FutureBuilder(
         future: Provider.of<GreatPlaceProvider>(context, listen: false)
             .fetchAndSetPlaces(),
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Consumer<GreatPlaceProvider>(
-                    builder: (ctx, greatPlaces, _) {
-                      if (greatPlaces.items.isEmpty) {
-                        return const Center(
-                          child: Text('Got no places yet, start adding some!'),
-                        );
-                      } else {
-                        return ListView.builder(
-                          itemCount: greatPlaces.items.length,
-                          itemBuilder: (context, index) => ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: FileImage(
-                                greatPlaces.items[index].image,
-                              ),
-                            ),
-                            title: Text(
-                              greatPlaces.items[index].title,
-                            ),
-                            onTap: () {
-                              // ....go to detail page
-                            },
+        builder: (context, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<GreatPlaceProvider>(
+                builder: (ctx, greatPlaces, _) {
+                  if (greatPlaces.items.isEmpty) {
+                    return const Center(
+                      child: Text('Got no places yet, start adding some!'),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: greatPlaces.items.length,
+                      itemBuilder: (context, index) => ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: FileImage(
+                            greatPlaces.items[index].image,
                           ),
-                        );
-                      }
-                    },
-                  ),
+                        ),
+                        title: Text(
+                          greatPlaces.items[index].title,
+                        ),
+                        subtitle: Text(
+                            greatPlaces.items[index].location!.address ?? ''),
+                        onTap: () {
+                          // ....go to detail page
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
       ),
     );
   }
