@@ -37,7 +37,9 @@ class _MapScreenState extends State<MapScreen> {
       markers.add(
         Marker(
           markerId: const MarkerId('m1'),
-          position: _pickedLocation!,
+          position: _pickedLocation! ??
+              LatLng(widget.initialLocation.latitude,
+                  widget.initialLocation.longitude),
         ),
       );
     }

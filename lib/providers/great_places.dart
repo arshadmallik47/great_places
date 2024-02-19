@@ -13,8 +13,15 @@ class GreatPlaceProvider with ChangeNotifier {
     return [..._items];
   }
 
-  Future<void> addPlace(String pickedTitle, File pickedImage,
-      PlaceLocation pickedLocation) async {
+  PlaceModel findById(String id) {
+    return _items.firstWhere((place) => place.id == id);
+  }
+
+  Future<void> addPlace(
+    String pickedTitle,
+    File pickedImage,
+    PlaceLocation pickedLocation,
+  ) async {
     final address = await LocaionHelper.getPlaceAddress(
         pickedLocation.latitude, pickedLocation.longitude);
     final updateLocation = PlaceLocation(
